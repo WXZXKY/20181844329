@@ -1,22 +1,22 @@
 #include <stdio.h>
-#include <time.h>
-#include <memory.h>
 #include <string.h>
 #include <thread>
 #include <algorithm>
+#include <time.h>
+#include <memory.h>
 
-#define MAXN 10
-#define MAXNN 100
+#define MAXN 5
+#define MAXNN 25
 
 #ifdef WIN32
 #include <conio.h>
 #endif
 
-typedef struct squarelist {
+typedef struct square_list {
     int     i[MAXNN];
     int     time;                                           // 结果时间
-    int     resultCount, partResultCount, totalCount;       // 结果序号，，已搜索排列数量
-    struct squarelist  *next;
+    int     resultCount, partResultCount, totalCount;       // 结果序号，已搜索排列数量
+    struct square_list  *next;
 } SQUARENODE;
 
 typedef struct square
@@ -55,13 +55,13 @@ int main(int argc, char *argv[])
     std::thread t[MAXNN];
     int sumtotalCount, sumpartResultCount, sumresultCount;
 
-    printf("input a number(3-5) and group size: ");
+    printf("input a number between 3 and 5 , group size:\n ");
     scanf("%d,%d", &N, &groupSize);
 
     NN = N * N;
     if (N <= 0 || N > 9 || groupSize <= 0 || groupSize > NN)
     {
-        printf("N: 3~9;  group size: 1~N*N");
+        printf("N: 3~5;  group size: 1~N*N");
         return -1;
     }//检查输入的分组大小是否合理
 
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
         t[i] = std::thread(beginWorker, &(s[i]));
     }
 
-    printf("\r\n");
+    printf("totalcount partresultcount resultcount time\r\n");
 
     int finished = false;
     while (!finished)
@@ -149,8 +149,6 @@ void msquare(SQUARE *ps, int no)
     rsum = ps->rsum[r];
     csum = ps->csum[c];
 
-    //calcThreshold(ps);
-
     for (i = 1; i <= NN; i++)
     {
         if (ps->remain[i] == 0)
@@ -192,7 +190,6 @@ void msquare(SQUARE *ps, int no)
                 ps->resultCount++;
                 ps->time = clock() - ps->t_start;
                 sl_append(ps);
-                //print(ps->tail, false);
             }
         }
         else
@@ -237,7 +234,7 @@ void initSquare(SQUARE *ps, int start, int end)
     }
 
     calcThreshold(ps);
-}//还原结构体的所有数据
+}  //还原结构体的所有数据
 
 SQUARENODE *sl_append(SQUARE *ps)//链表建立节点
 {
@@ -310,7 +307,7 @@ void calcThreshold(SQUARE *ps)
 {
     int temp, i, count;
 
-    //  N=4 , max[3]=0, max[2]=16, max[1]=31, max[0]=45
+    //  N=4 ?, max[3]=0, max[2]=16, max[1]=31, max[0]=45
     count = N - 1;
     ps->threshold_max[count] = 0;
     for (i = 1; i < NN; i++)
@@ -336,7 +333,6 @@ void calcThreshold(SQUARE *ps)
             break;
     }
 }
-
 
 int exam(SQUARE *ps)
 {
