@@ -5,8 +5,8 @@
 #include <time.h>
 #include <memory.h>
 
-#define MAXN 5
-#define MAXNN 25
+#define MAXN 10
+#define MAXNN 100
 
 #ifdef WIN32
 #include <conio.h>
@@ -306,8 +306,6 @@ void fileWrite(char *filename, SQUARE *ps, int count )
 void calcThreshold(SQUARE *ps)
 {
     int temp, i, count;
-
-    //  N=4 ?, max[3]=0, max[2]=16, max[1]=31, max[0]=45
     count = N - 1;
     ps->threshold_max[count] = 0;
     for (i = 1; i < NN; i++)
