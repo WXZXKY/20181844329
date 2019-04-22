@@ -154,8 +154,9 @@ void msquare(SQUARE *ps, int no)
         if (ps->remain[i] == 0)
             continue;
 
-        tempcsum = csum + i;
         temprsum = rsum + i;
+        tempcsum = csum + i;
+        
 
         if (temprsum > ps->stdsum || tempcsum > ps->stdsum)//当前和与标准和比较
             break;
@@ -169,7 +170,7 @@ void msquare(SQUARE *ps, int no)
         {
             if ((temprsum + ps->threshold_max[c] < ps->stdsum) || temprsum + ps->threshold_min[c] > ps->stdsum)
                 continue;
-        }//当前和加上剩余理论最小值最大值与标准值的比较
+        } //当前和加上剩余理论最小值最大值与标准值的比较
         if (r > 1)
         {
             if ((tempcsum + ps->threshold_max[r] < ps->stdsum) || tempcsum + ps->threshold_min[r] > ps->stdsum)
@@ -318,7 +319,7 @@ void calcThreshold(SQUARE *ps)
             break;
     }
 
-    // N=4??? min[3]=0, min[2]=1, min[1]=3, min[0]=6
+
     count = N - 1;
     ps->threshold_min[count] = 0;
     for (i = 1; i < NN; i++)
